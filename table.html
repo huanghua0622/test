@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单验证</title>
+</head>
+<body>
+<table>
+    <form id="login">
+    <tr>
+        <td align="left">用户名:</td>
+        <td><input type="text" name="user" value=""></td>
+    </tr>
+    <tr align="left">
+        <td>密码:</td>
+        <td><input type="password" name="pwd" value=""></td>
+    </tr>
+    <tr align="left">
+        <td>密码确认:</td>
+        <td><input type="password1" name="pwd1" value=""></td>
+    </tr>
+    <tr align="left">
+        <td>邮箱:</td>
+        <td><input type="email" name="email" value=""></td>
+    </tr>
+    <tr align="left">
+        <td colspan="2"><input type="submit" value="提交"></td>
+    </tr>
+    </form>
+</table>
+<script>
+    $form = document.getElementById('login');
+    $form.onsubmit = function(){
+        var user = this.user.value;
+        var pwd = this.pwd.value;
+        var pwd1 = this.pwd1.value;
+        var email = this.email.value;
+        var result = new Array();
+        if(user.length<6 || user.length>12 ){
+            result['user'] = "账号长度不合法";
+        }else if("_" instanceof user){
+            result['user'] = "";
+        }else{
+            result['user'] = "";
+        }
+        if(pwd.length<6 || pwd.length>12){
+            result['pwd'] = "密码长度不合法";
+        }else{
+            result['user'] = "";
+        }
+        if(pwd1 !== pwd){
+            result["pwd1"] = "两次密码不一致";
+        }else{s
+            result['user'] = "";
+        }
+        if('@' instanceof email){
+            result['user'] = "";
+        }else{
+            result['user'] = "邮箱格式不正确";
+        }
+        for(var key in result){
+            var span = this[key].nextSibling || document.createElement("span");
+            span.innerHTML = result[key];
+            span.className = result[key] ? "error" : "right";
+            this[key].parentNode.appendChild(span);
+        }
+        if(Object.values(result).join("") == ""){
+            return true;
+        }
+            return false;
+
+    };
+</script>
+</body>
+</html>
