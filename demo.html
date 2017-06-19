@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="/Public/Admin/js/jquery-1.8.1.min.js"></script>
+    <script src="/Public/Admin/js/bootstrap.min.js"></script>
+    <!-- 日期控件 -->
+    <script src="/Public/Admin/js/calendar/WdatePicker.js"></script>
+</head>
+<body>
+<form action="">
+    <tr>
+        <td>
+            <select name="select" id="select">
+                <option value="0" class="type">请选择</option>
+                <option value="1" class="type">用户名查询</option>
+                <option value="1" class="type">时间区间查询</option>
+             </select>
+        </td>
+        <td>
+            <div class="div_name"></div>
+            <div class="div_time"></div>
+        </td>
+    </tr>
+</form>
+<script>
+    $(function(){
+       $('.select').on(change,function(){
+           var val = $(this).val();
+           console.log(val);
+           if(val == 1){
+               var str = "<input type='text' name='username' class='username'/><input type='button' id='sub1' value='提交'/>";
+               $('.div_name').html(str);
+           }else if(val == 2){
+               var str = "<input type='text' name='time1' class='time1'/><input type='text' id='sub2' name='time2' class='time3'/><input type='button' value='提交'/>";
+               $('.div_time').html(str);
+           }else{
+               $('.div_time').html('');
+           }
+       });
+       $('#sub1').click(function(){
+           var type = $('#select').val();
+           if(type == 1){
+               var username = $('#username').val();
+               $.ajax({
+                  'url':'OrderController/getOrderByName',
+                   'type':'post',
+                   'data':data,
+                   'dataType':'json',
+                   'success':function(response){
+                      if(response.code !== 10000){
+                          alert(response.msg);
+                          return;
+                      }else{
+                          var str = '';
+                          str += '<table><tr><td>订单id</td><td>下单人</td><td>商品名称</td><td>订购数量</td><td>下单时间</td></tr>';
+                          $.each(response.data,function(i,v){
+                              str+='<tr"><td>'+v.id;
+                              str+='</td><td>'+v.user_name;
+                              str+='</td><td>'+v.goods_name;
+                              str+='</td><td>'+v.number;
+                              str+='</td><td>'+v.order_time+'</td>';
+                          });
+                          str+='</table>';$('#result').html(str);
+
+                      }
+                   }
+               });
+           }else{
+
+           }
+       })
+    });
+</script>
+</body>
+</html>
