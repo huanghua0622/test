@@ -1,0 +1,46 @@
+<?php
+
+function f($n){
+
+	// 写递归函数的时候先写终结点
+	if($n == 1 || $n == 2) {
+		return 1;
+	}
+
+	// 写递归的开始点
+	// $n的前一项 + $n的前第二项
+	$result = f($n - 1) + f($n - 2);
+
+	return $result;
+}
+
+// $first = f(1);
+// $second = f(2);
+
+// var_dump($first,$second);
+
+$r = f(10);
+
+echo $r;
+
+
+echo '<hr>';
+function jiecheng($n) {
+
+	// 先写出终结点
+	if($n == 0 || $n == 1) {
+		return 1;
+	}
+
+	// 递归的开始点
+	$result = $n * jiecheng($n-1);
+
+	return $result;
+}
+
+$re = jiecheng(6);
+echo $re;
+
+
+
+?>
